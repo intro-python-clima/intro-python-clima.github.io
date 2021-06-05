@@ -1,5 +1,7 @@
 # Introducción a Python aplicado a ciencias del clima
 
+⚠️ **WORK IN PROGRESS** ⚠️
+
 Esta colección busca ser una referencia base a todo aquel que quiera comenzar a usar python en ciencias del clima.
 
 La primera parte consta de una introduccion a python en general, lo cual puede ser aprovechado por el publico en general; sin embargo, el objetivo posterior es centrarse en herramientas que faciliten el manejo y procesamiento de datos climaticos u observacionales.
