@@ -262,6 +262,40 @@
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#terminologia">
+     Terminología
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#uso-basico-de-conda">
+     Uso básico de conda
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#creacion-de-entornos">
+       Creación de entornos
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#usando-un-archivo-yml">
+         Usando un archivo
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           .yml
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#instalando-paquetes">
+       Instalando paquetes
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#lo-que-necesito-saber">
      Lo que necesito saber
     </a>
@@ -286,12 +320,65 @@
                 
   <div class="section" id="introduccion-a-conda">
 <h1>Introducción a <code class="docutils literal notranslate"><span class="pre">conda</span></code><a class="headerlink" href="#introduccion-a-conda" title="Permalink to this headline">¶</a></h1>
-<p>El entorno de trabajo instalado contiene un set de paquetes utiles para los trabajos que desee realizar, sientase libre de personalizar el contenido del mismo conforme vaya necesitando algunos paquetes más especializados.</p>
-<p>Si desea instalar un paquete adicional, deberá consultar la documentación del mismo donde especifican las opciones de instalación. Sin embargo, la mayoría de paquetes pueden ser instalados mediante el siguiente comando</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c conda-forge PKG-NAME
+<p>Entender el uso de <code class="docutils literal notranslate"><span class="pre">conda</span></code> es esencial al momento de trabajar usando entornos en python. Mediante <code class="docutils literal notranslate"><span class="pre">conda</span></code> podemos administrar los paquetes instalados en nuestro espacio de trabajo sin afectar los paquetes instalados por el mismo sistema operativo. Para poder sentar las bases, vamos a definir primero la terminología usada al trabajar con esta herramienta</p>
+<div class="section" id="terminologia">
+<h2>Terminología<a class="headerlink" href="#terminologia" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Entorno (<em>environment</em>) <br />
+Es el espacio de trabajo aislado que es creado al usar el comando <code class="docutils literal notranslate"><span class="pre">conda</span></code>. Dentro de una misma instalación podemos tener multiples entornos, cada uno con versiones de python distintas, sin ocasionar conflictos entre si.</p>
+<p>Se puede identificar la presencia de un entorno entre paréntesis, <code class="docutils literal notranslate"><span class="pre">(base)</span></code> en este ejemplo, al abrir una consola de comandos</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="o">(</span>base<span class="o">)</span> grivera@IGPmaster2:~&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Administrador de paquetes (<em>package manager</em>) <br />
+Es una herramienta que automatiza el proceso de instalación, actualización, configuración y desinstalación de programas de manera consistente. <code class="docutils literal notranslate"><span class="pre">conda</span></code> funciona como un administrador de paquetes para python al distribuir paquetes junto a sus dependencias ya compiladas para el sistema operativo que se esté usando.</p></li>
+<li><p>Canal (<em>channel</em>) <br />
+<code class="docutils literal notranslate"><span class="pre">conda</span></code> presenta la opción de canales para distinguir la ubicación de paquetes que tengan el mismo nombre. Por ejemplo, el canal por defecto <code class="docutils literal notranslate"><span class="pre">defaults</span></code> puede tener un paquete llamado <code class="docutils literal notranslate"><span class="pre">mypackage</span></code> en su versión v1.0, mientras que el mismo paquete puede estar disponible en otro canal llamado <code class="docutils literal notranslate"><span class="pre">grivera</span></code> en su versión v1.2. Esto permite instalar paquetes directamente de los canales de los desarrolladores en caso se quisiera contar con las actualizaciones menos estables.</p></li>
+<li><p>Paquete (<em>package</em>) <br />
+Tambien conocido como libreria, es el conjunto de utilidades contenido bajo un directorio estructurado el cual es capaz de ser importado dentro de un script.</p></li>
+</ul>
+</div>
+<div class="section" id="uso-basico-de-conda">
+<h2>Uso básico de conda<a class="headerlink" href="#uso-basico-de-conda" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creacion-de-entornos">
+<h3>Creación de entornos<a class="headerlink" href="#creacion-de-entornos" title="Permalink to this headline">¶</a></h3>
+<p>Conda permite la creación de entornos mediante la siguiente sintaxis</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ conda create -n MiEntorno <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 numpy pandas matplotlib
+</pre></div>
+</div>
+<p>Donde <code class="docutils literal notranslate"><span class="pre">-n</span> <span class="pre">MiEntorno</span></code> sirve para indicar el nombre del entorno a crear. Seguido de esto, encontramos la lista de paquetes que quisieramos agregar al entorno en el momento de su creación, con la opción de especificar una versión en concreto usando el simbolo de igual (<code class="docutils literal notranslate"><span class="pre">=</span></code>). En el ejemplo mostrado, se creará el entorno llamado <code class="docutils literal notranslate"><span class="pre">MiEntorno</span></code> usando python en su version 3.6 junto a <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> y <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p>
+<div class="section" id="usando-un-archivo-yml">
+<h4>Usando un archivo <code class="docutils literal notranslate"><span class="pre">.yml</span></code><a class="headerlink" href="#usando-un-archivo-yml" title="Permalink to this headline">¶</a></h4>
+<p>Conforme uno va agregando contenido a su entorno, el recrearlo usando la sintaxis mostrada anteriormente se vuelve muy tedioso debido a la gran cantidad de paquetes que se van acumulando. Como solución a este problema, <code class="docutils literal notranslate"><span class="pre">conda</span></code> permite usar un archivo con extensión <code class="docutils literal notranslate"><span class="pre">.yml</span></code> el cual contenga la descripción del entorno a crear.</p>
+<p>La estructura de este archivo, aplicado al ejemplo anterior, sería el siguiente:</p>
+<div class="highlight-yml notranslate"><div class="highlight"><pre><span></span>name: MiEntorno
+dependencies:
+    - python=3.6
+    - numpy
+    - pandas
+    - matplotlib
+</pre></div>
+</div>
+<p>Guardando este contenido con el nombre <code class="docutils literal notranslate"><span class="pre">mientorno.yml</span></code>, la instalación se realiza de la siguiente manera:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ conda env create -f mientorno.yml
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="instalando-paquetes">
+<h3>Instalando paquetes<a class="headerlink" href="#instalando-paquetes" title="Permalink to this headline">¶</a></h3>
+<p>Si desea instalar un paquete, lo primero que deberá realizar es consultar la documentación del mismo en donde se especifique las opciones de instalación. Sin embargo, la mayoría de paquetes pueden ser instalados mediante el siguiente comando</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge PKG-NAME
 </pre></div>
 </div>
 <p>Donde <code class="docutils literal notranslate"><span class="pre">PKG-NAME</span></code> es el nombre del paquete que desea instalar y <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">conda-forge</span></code> especifica que el paquete sea instalado desde el canal <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code> (recomendado)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>El entorno de trabajo instalado contiene un set de paquetes utiles para los trabajos que desee realizar, sientase libre de personalizar el contenido del mismo conforme vaya necesitando algunos paquetes más especializados.</p>
+</div>
+</div>
+</div>
 <div class="section" id="lo-que-necesito-saber">
 <h2>Lo que necesito saber<a class="headerlink" href="#lo-que-necesito-saber" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
